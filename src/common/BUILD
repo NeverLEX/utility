@@ -11,6 +11,7 @@ cc_library(
         "log.h",
         "option-parser.h",
         "utility.h",
+        "topset.h",
     ],
     includes = ["./"],
 )

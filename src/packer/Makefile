@@ -9,12 +9,6 @@ LDLIBS +=
 EXTRA_LDLIBS =
 ADDLIBS =
 
-ifeq ($(shell uname), Darwin)
-    EXTRA_LDLIBS += -liconv -framework Accelerate
-else
-    ADDLIBS += $(THIRD_PARTY_ROOT)/lib/libopenblas.a
-endif
-
 LIBS = packer.a
 OBJECT = huffman.o packer.o
 BINS = resource-packer

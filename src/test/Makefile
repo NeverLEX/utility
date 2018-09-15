@@ -9,15 +9,9 @@ LDLIBS +=
 EXTRA_LDLIBS =
 ADDLIBS = ../packer/packer.a
 
-ifeq ($(shell uname), Darwin)
-    EXTRA_LDLIBS += -liconv -framework Accelerate
-else
-    ADDLIBS += $(THIRD_PARTY_ROOT)/lib/libopenblas.a
-endif
-
 LIBS =
 OBJECT =
-BINS = arraylist_test arraymap_test defer_test dev-tools_test huffman_test option-parser_test packer_test
+BINS = arraylist_test arraymap_test defer_test dev-tools_test huffman_test option-parser_test packer_test topset_test
 
 all: $(BINS) $(LIBS)
 

@@ -86,3 +86,14 @@ cc_test(
     timeout="short",
 )
 
+cc_test(
+    name = "topset_test",
+    srcs = [
+        "topset_test.cc",
+    ],
+    deps = [
+        "//src/common:headers",
+    ],
+    timeout="short",
+)
+

@@ -43,3 +43,6 @@ CheckSuccess "Option Parser TEST" $?
 ../src/test/packer_test --data_path=../testdata/mytestdata &> $TEMP_DIR/packer_test.log
 CheckSuccess "Packer TEST" $?
 
+../src/test/topset_test &> $TEMP_DIR/topset_test.log
+CheckSuccess "TopSet TEST" $?
+
