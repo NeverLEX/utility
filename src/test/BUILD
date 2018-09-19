@@ -87,6 +87,17 @@ cc_test(
 )
 
 cc_test(
+    name = "arraypool_test",
+    srcs = [
+        "arraypool_test.cc",
+    ],
+    deps = [
+        "//src/common:headers",
+    ],
+    timeout="short",
+)
+
+cc_test(
     name = "topset_test",
     srcs = [
         "topset_test.cc",
