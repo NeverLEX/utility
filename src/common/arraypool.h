@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <stack>
-#include <cassert>
 
 namespace utility {
 
@@ -11,17 +9,16 @@ namespace utility {
 template<typename value_t>
 class ArrayPool {
 public:
-    ArrayPool() : valid_count_(0), max_elem_size_(INIT_ARRAY_POOL_SIZE) { }
-    ArrayPool(uint32_t init_size) : valid_count_(0), max_elem_size_(init_size<65535 ? init_size : 65535) { }
+    ArrayPool() : valid_count_(0), free_index_(0), max_elem_size_(INIT_ARRAY_POOL_SIZE) { }
+    ArrayPool(uint32_t init_size) : valid_count_(0), free_index_(0), max_elem_size_(init_size<65535 ? init_size : 65535) { }
 
     value_t* Alloc() {
-        if (valid_count_ < max_elem_size_/4) Enlarge();
+        if (valid_count_ < (max_elem_size_>>2)) Enlarge();
         // alloc from stack
         if (NoContinues()) {
-            IndexT id = free_st_.top();
-            free_st_.pop();
+            IndexT& id = free_elems_[--free_index_];
             ElemT &e = pools_[id.chunk][id.index];
-            e.id = id;
+            //e.id = id;
             valid_count_--;
             return &e.val;
         } else {
@@ -34,17 +31,17 @@ public:
     }
 
     void Delete(value_t* val) {
-        IndexT* id = (IndexT*)((char*)val - offsetof(ElemT, val));
-        free_st_.push(*id);
+        free_elems_[free_index_++] = *(IndexT*)((char*)val - offsetof(ElemT, val));
         valid_count_++;
     }
 
     size_t size() const { return pools_.size() * max_elem_size_ - valid_count_; }
 
     void clear() {
-        free_st_.clear();
+        free_elems_.clear();
         pools_.clear();
         valid_count_ = 0;
+        free_index_ = 0;
     }
 
 private:
@@ -62,6 +59,7 @@ private:
     void Enlarge() {
         pools_.push_back(std::vector<ElemT>());
         pools_.back().resize(max_elem_size_);
+        free_elems_.resize(pools_.size() * max_elem_size_);
         valid_count_ += max_elem_size_;
     }
 
@@ -78,10 +76,12 @@ private:
     };
 
     uint32_t valid_count_;
+    uint32_t free_index_;
     uint32_t max_elem_size_;
     IndexT index_; // current index
-    std::stack<IndexT> free_st_;  // free elements
+    std::vector<IndexT> free_elems_;  // free elements
     std::vector<std::vector<ElemT>> pools_; // elements pool
 };
 
 }  // namespace utility
+
