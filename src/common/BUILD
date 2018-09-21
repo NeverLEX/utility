@@ -5,6 +5,7 @@ cc_library(
     hdrs = [
         "arraylist.h",
         "arraymap.h",
+        "arraypool.h",
         "ctest.h",
         "defer.h",
         "dev-tools.h",

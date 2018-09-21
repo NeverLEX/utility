@@ -28,6 +28,9 @@ CheckSuccess "ArrayList TEST" $?
 ../src/test/arraymap_test &> $TEMP_DIR/arraymap_test.log
 CheckSuccess "ArrayMap TEST" $?
 
+../src/test/arraypool_test &> $TEMP_DIR/arraypool_test.log
+CheckSuccess "ArrayPool TEST" $?
+
 ../src/test/defer_test &> $TEMP_DIR/defer_test.log
 CheckSuccess "Defer TEST" $?
 

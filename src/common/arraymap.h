@@ -43,7 +43,7 @@ public:
     void clear() {
         nodesize = 0;
         if(v_table) memset(v_table, 0, tablesize * sizeof(value_t));
-        if(k_table) memset(k_table, 0, tablesize * sizeof(void*));
+        if(k_table) memset(k_table, 0, tablesize * sizeof(key_t));
     }
 
     size_t size() const {
@@ -76,12 +76,12 @@ public:
         return Insert(key);
     }
 
-    //delete the (str -> value), return the value or 0 if not found.
-    value_t Delete(key_t str) {
-        size_t i = MyHash(str) & (tablesize-1);
+    //delete the (key -> value), return the value or 0 if not found.
+    value_t Delete(key_t key) {
+        size_t i = MyHash(key) & (tablesize-1);
         while(true){
             if(!k_table[i]) return 0; //not found
-            if(IsEqualKey(k_table[i], str)) break;
+            if(IsEqualKey(k_table[i], key)) break;
             i = (i+1) & (tablesize-1);
         }
         value_t v = v_table[i];

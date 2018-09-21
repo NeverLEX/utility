@@ -11,7 +11,7 @@ ADDLIBS = ../packer/packer.a
 
 LIBS =
 OBJECT =
-BINS = arraylist_test arraymap_test defer_test dev-tools_test huffman_test option-parser_test packer_test topset_test
+BINS = arraylist_test arraymap_test arraypool_test defer_test dev-tools_test huffman_test option-parser_test packer_test topset_test
 
 all: $(BINS) $(LIBS)
 
