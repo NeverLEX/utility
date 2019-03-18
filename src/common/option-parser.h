@@ -7,6 +7,8 @@
 
 class OptionParser {
 public:
+    OptionParser() : max_arg_len_(8) {}
+
     bool ParseOptions(int argc, char *argv[]) {
         options_.clear();
         // argv[0] binary path, set binary name
@@ -31,7 +33,6 @@ public:
     }
 
     void Register(const std::string& opt, const std::string& instructions, bool is_required_ = true) {
-        max_arg_len_ = 8;
         if (opt.length() > max_arg_len_) max_arg_len_ = (opt.length() + 7)/8*8;
         if (is_required_) {
             required_.push_back(std::make_pair(opt, instructions));
